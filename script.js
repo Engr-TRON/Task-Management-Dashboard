@@ -7,7 +7,7 @@ const taskTitle = document.querySelector("#taskTitle");
 const taskText = document.querySelector("#taskText");
 const formMsg = document.querySelector("#formMsg");
 
-const tasks = [
+let tasks = [
   {
     id: 1,
     title: "Write the plan",
@@ -54,6 +54,38 @@ function createCard(task) {
   card.appendChild(title);
   card.appendChild(text);
 
+  const buttons = document.createElement("div");
+  buttons.className = "card-buttons";
+  card.appendChild(buttons);
+
+  if (task.status !== "todo") {
+    const backBtn = document.createElement("button");
+    backBtn.className = "card-btn";
+    backBtn.textContent = "Back";
+    backBtn.addEventListener("click", function () {
+      moveBack(task.id);
+    });
+    buttons.appendChild(backBtn);
+  }
+
+  if (task.status !== "done") {
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "card-btn";
+    nextBtn.textContent = "Next";
+    nextBtn.addEventListener("click", function () {
+      moveForward(task.id);
+    });
+    buttons.appendChild(nextBtn);
+  }
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "card-btn delete-btn";
+  deleteBtn.textContent = "Delete";
+  deleteBtn.addEventListener("click", function () {
+    deleteTask(task.id);
+  });
+  buttons.appendChild(deleteBtn);
+
   return card;
 }
 
@@ -77,9 +109,69 @@ function renderBoard() {
 
 renderBoard();
 
+function moveBack(id) {
+  for (const task of tasks) {
+    if (task.id === id) {
+      if (task.status === "done") {
+        task.status = "progress";
+      } else if (task.status === "progress") {
+        task.status = "todo";
+      }
+    }
+  }
+  renderBoard();
+}
+
+function moveForward(id) {
+  for (const task of tasks) {
+    if (task.id === id) {
+      if (task.status === "todo") {
+        task.status = "progress";
+      } else if (task.status === "progress") {
+        task.status = "done";
+      }
+    }
+  }
+  renderBoard();
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter(function (task) {
+    return task.id !== id;
+  });
+  renderBoard();
+}
+
 taskForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
   const titleValue = taskTitle.value.trim();
   const textValue = taskText.value.trim();
+
+  if (titleValue === "") {
+    formMsg.textContent = "Please enter a task title";
+    formMsg.style.color = "red";
+  } else if (titleValue.length > 40) {
+    formMsg.textContent = "Title: 40 characters max";
+    formMsg.style.color = "red";
+  } else if (textValue === "") {
+    formMsg.textContent = "Please enter the task details";
+    formMsg.style.color = "red";
+  } else {
+    const newTask = {
+      id: nextId,
+      title: titleValue,
+      text: textValue,
+      status: "todo",
+    };
+
+    tasks.push(newTask);
+    nextId = nextId + 1;
+    renderBoard();
+
+    formMsg.textContent = "Task added";
+    formMsg.style.color = "green";
+    taskTitle.value = "";
+    taskText.value = "";
+  }
 });
