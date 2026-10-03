@@ -1,0 +1,99 @@
+:root {
+  --page-bg: #f1f3f9;
+  --column-bg: #e4e8f2;
+  --card-bg: #ffffff;
+  --header-bg: #2b3a67;
+  --text-dark: #1f2937;
+  --text-light: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--page-bg);
+  color: var(--text-dark);
+}
+
+.app-header {
+  background-color: var(--header-bg);
+  color: var(--text-light);
+  padding: 20px 24px;
+}
+
+.board {
+  display: flex;
+  gap: 20px;
+  padding: 24px;
+}
+
+.column {
+  flex: 1;
+  background-color: var(--column-bg);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.column-title {
+  font-size: 18px;
+  margin-bottom: 14px;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.card-text {
+  font-size: 14px;
+}
+
+.add-task {
+  padding: 24px 24px 0 24px;
+}
+
+.task-form {
+  display:flex;
+  gap: 12px;
+}
+
+.task-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #b6bdd3;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.add-btn {
+  padding: 10px 20px;
+  background-color: var(--header-bg);
+  color:var(--text-light);
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form-msg {
+  margin-top: 10px;
+  min-height: 22px;
+  font-size: 14px;
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Management Dashboard | Kanban Board</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>Task Dashboard</h1>
+    </header>
+
+    <section class="add-task">
+      <form id="taskForm" class="task-form">
+        <input id="taskTitle" class="task-input" placeholder="Task title" />
+
+        <input id="taskText" class="task-input" placeholder="Task details" />
+
+        <button type="submit" class="add-btn">Add Task</button>
+      </form>
+      <p id="formMsg" class="form-msg"></p>
+    </section>
+
+    <main class="board">
+      <section class="column" id="todoColumn">
+        <h2 class="column-title">To Do</h2>
+        <div class="card-list" id="todoList"></div>
+      </section>
+
+      <section class="column" id="progressColumn">
+        <h2 class="column-title">Progress</h2>
+        <div class="card-list" id="progressList"></div>
+      </section>
+
+      <section class="column" id="doneColumn">
+        <h2 class="column-title">Done</h2>
+        <div class="card-list" id="doneList"></div>
+      </section>
+    </main>
+  </body>
+</html>
