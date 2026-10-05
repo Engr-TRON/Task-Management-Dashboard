@@ -37,7 +37,18 @@ let tasks = [
   },
 ];
 
-let nextId = 5;
+const savedTasks = localStorage.getItem("kanbanTasks");
+
+if (savedTasks !== null) {
+  tasks = JSON.parse(savedTasks);
+}
+
+let nextId = 1;
+for (const task of tasks) {
+  if (task.id >= nextId) {
+    nextId = task.id + 1;
+  }
+}
 
 function createCard(task) {
   const card = document.createElement("div");
@@ -119,6 +130,7 @@ function moveBack(id) {
       }
     }
   }
+  saveTasks();
   renderBoard();
 }
 
@@ -132,6 +144,7 @@ function moveForward(id) {
       }
     }
   }
+  saveTasks();
   renderBoard();
 }
 
@@ -139,7 +152,13 @@ function deleteTask(id) {
   tasks = tasks.filter(function (task) {
     return task.id !== id;
   });
+  saveTasks();
   renderBoard();
+}
+
+function saveTasks() {
+  const text = JSON.stringify(tasks);
+  localStorage.setItem("kanbanTasks", text);
 }
 
 taskForm.addEventListener("submit", function (e) {
@@ -167,6 +186,7 @@ taskForm.addEventListener("submit", function (e) {
 
     tasks.push(newTask);
     nextId = nextId + 1;
+    saveTasks();
     renderBoard();
 
     formMsg.textContent = "Task added";
