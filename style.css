@@ -134,3 +134,13 @@ body {
   font-size: 14px;
   color: #6b7280;
 }
+
+@media (max-width: 70px) {
+  .board {
+    flex-direction: column;
+  }
+
+  .task-form {
+    flex-direction: column;
+  }
+}
