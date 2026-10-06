@@ -7,6 +7,10 @@ const taskTitle = document.querySelector("#taskTitle");
 const taskText = document.querySelector("#taskText");
 const formMsg = document.querySelector("#formMsg");
 
+const todoCount = document.querySelector("#todoCount");
+const progressCount = document.querySelector("#progressCount");
+const doneCount = document.querySelector("#doneCount");
+
 let tasks = [
   {
     id: 1,
@@ -116,6 +120,24 @@ function renderBoard() {
       doneList.appendChild(card);
     }
   }
+
+  const todoTotal = countByStatus("todo");
+  const progressTotal = countByStatus("progress");
+  const doneTotal = countByStatus("done");
+
+  todoCount.textContent = todoTotal;
+  progressCount.textContent = progressTotal;
+  doneCount.textContent = doneTotal;
+
+  if (todoTotal === 0) {
+    addEmptyMessage(todoList);
+  }
+  if (progressTotal === 0) {
+    addEmptyMessage(progressList);
+  }
+  if (doneTotal === 0) {
+    addEmptyMessage(doneList);
+  }
 }
 
 renderBoard();
@@ -159,6 +181,20 @@ function deleteTask(id) {
 function saveTasks() {
   const text = JSON.stringify(tasks);
   localStorage.setItem("kanbanTasks", text);
+}
+
+function countByStatus(status) {
+  const matches = tasks.filter(function (task) {
+    return task.status === status;
+  });
+  return matches.length;
+}
+
+function addEmptyMessage(list) {
+  const message = document.createElement("p");
+  message.className = "empty-msg";
+  message.textContent = "No tasks here yet";
+  list.appendChild(message);
 }
 
 taskForm.addEventListener("submit", function (e) {
