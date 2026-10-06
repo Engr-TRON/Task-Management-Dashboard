@@ -11,6 +11,10 @@ const todoCount = document.querySelector("#todoCount");
 const progressCount = document.querySelector("#progressCount");
 const doneCount = document.querySelector("#doneCount");
 
+const todoCol = document.querySelector("#todoColumn");
+const progressCol = document.querySelector("#progressColumn");
+const doneCol = document.querySelector("#doneColumn");
+
 let tasks = [
   {
     id: 1,
@@ -57,6 +61,11 @@ for (const task of tasks) {
 function createCard(task) {
   const card = document.createElement("div");
   card.className = "card";
+
+  card.draggable = true;
+  card.addEventListener("dragstart", function (e) {
+    e.dataTransfer.setData("text/plain", String(task.id));
+  });
 
   const title = document.createElement("h3");
   title.className = "card-title";
@@ -197,6 +206,26 @@ function addEmptyMessage(list) {
   list.appendChild(message);
 }
 
+function makeDropZone(column, status) {
+  column.addEventListener("dragover", function (e) {
+    e.preventDefault();
+  });
+
+  column.addEventListener("drop", function (e) {
+    e.preventDefault();
+    const id = Number(e.dataTransfer.getData("text/plain"));
+
+    for (const task of tasks) {
+      if (task.id === id) {
+        task.status = status;
+      }
+    }
+
+    saveTasks();
+    renderBoard();
+  });
+}
+
 taskForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -231,3 +260,7 @@ taskForm.addEventListener("submit", function (e) {
     taskText.value = "";
   }
 });
+
+makeDropZone(todoCol, "todo");
+makeDropZone(progressCol, "progress");
+makeDropZone(doneCol, "done");
