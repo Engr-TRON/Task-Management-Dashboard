@@ -117,3 +117,20 @@ body {
 .delete-btn {
   background-color: #b91c1c;
 }
+
+.count {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 10px;
+  background-color: var(--header-bg);
+  color: var(--text-light);
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.empty-msg {
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+}
